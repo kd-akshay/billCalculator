@@ -36,8 +36,6 @@
     transform: rotate(360deg);
   }
 }
-
-
 .cursonPointer{
   cursor: pointer;
 }
