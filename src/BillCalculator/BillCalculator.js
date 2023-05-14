@@ -204,12 +204,12 @@ export default function BillCalculator() {
         </table>
       </div>
       <div className="col-xs-12 d-flex justify-content-end gap-4">
-        <div className="col-xs-5">
+        <div className="col-xs-6">
           <input className="form-control" value={grandTotal} disabled></input>
-          <button className="btn btn-primary" onClick={importExcel}>
-            import excel
-          </button>
         </div>
+        <button className="btn btn-primary" onClick={importExcel}>
+          import excel
+        </button>
       </div>
     </div>
   );
