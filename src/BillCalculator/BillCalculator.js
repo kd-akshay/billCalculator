@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
+import * as XLSX from "xlsx";
+
 export default function BillCalculator() {
   const [items, setItems] = useState([
     {
@@ -74,11 +76,35 @@ export default function BillCalculator() {
     });
     setGrandTotal(GTotal);
   }, [items]);
+
+  const importExcel = () => {
+    var workbook = XLSX.utils.book_new();
+
+    let itemsJson = [...items];
+    itemsJson.push({
+      id: "",
+      name: "GrandTotal",
+      quantity: "",
+      price: "",
+      total: grandTotal,
+    });
+    var worksheet = XLSX.utils.json_to_sheet(itemsJson);
+
+    workbook.SheetNames.push("Test");
+    workbook.Sheets["Test"] = worksheet;
+
+    exportExcelFile(workbook);
+  };
+
+  const exportExcelFile = (workbook) => {
+    return XLSX.writeFile(workbook, "bookName.xlsx");
+  };
+
   return (
     <div className="col-xs-12">
       <div className="col-xs-12 fs-2">Bill Calculator</div>
       <div className="col-xs-12 d-flex mt-5">
-        <table class="table">
+        <table class="table" id="billTable">
           <thead class="thead-dark">
             <tr>
               <th scope="col"></th>
@@ -180,6 +206,9 @@ export default function BillCalculator() {
       <div className="col-xs-12 d-flex justify-content-end gap-4">
         <div className="col-xs-5">
           <input className="form-control" value={grandTotal} disabled></input>
+          <button className="btn btn-primary" onClick={importExcel}>
+            import excel
+          </button>
         </div>
       </div>
     </div>
